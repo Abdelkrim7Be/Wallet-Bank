@@ -10,7 +10,7 @@
 // DIFFERENT DATA! Contains movement dates, currency and locale
 
 const account1 = {
-  owner: 'Jonas Schmedtmann',
+  owner: 'Abdelkrim Bellagnech',
   movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
   interestRate: 1.2, // %
   pin: 1111,
@@ -395,7 +395,7 @@ console.log(overallBalance2); //17840
 // Sorting arrays
 
 // Strings
-const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+const owners = ['Abdelkrim', 'Zach', 'Adam', 'Martha'];
 console.log(owners.sort());
 console.log(owners); //sort() mutates the original array ,soo u should be careful
 
