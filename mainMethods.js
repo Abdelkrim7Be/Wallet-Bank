@@ -31,6 +31,10 @@ import {
 let initialAccount = account1;
 const movements = initialAccount.movements;
 
+const formatter = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'UTC',
+});
+
 export const displayMovements = function (acc, sort = false) {
   // But we should empty the entire container , and only then, we should start adding new elements :
   containerMovements.innerHTML = '';
@@ -45,10 +49,15 @@ export const displayMovements = function (acc, sort = false) {
   movs.forEach(function (movement, index) {
     const type = movement > 0 ? 'deposit' : 'withdrawal';
 
+    const date = new Date(acc.movementsDates[index]);
+    const displayDate = formatter.format(date);
+
+
     const html = ` <div class="movements__row">
           <div class="movements__type movements__type--${type}">${
       index + 1
     } ${type}</div>
+          <div class="movements__date">${displayDate}</div>
           <div class="movements__value">${movement.toFixed(2)}€</div>
         </div>`;
 

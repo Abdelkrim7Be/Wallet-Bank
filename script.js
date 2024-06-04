@@ -36,12 +36,11 @@ import {
   updateUI,
 } from './mainMethods.js';
 
+let currentAccount;
 let initialAccount = account1;
 const movements = initialAccount.movements;
 
 // Event Handelers
-
-let currentAccount;
 
 // Login
 btnLogin.addEventListener('click', function (e) {
@@ -57,6 +56,14 @@ btnLogin.addEventListener('click', function (e) {
       currentAccount.owner.split(' ')[0]
     }!`;
     containerApp.style.opacity = 100;
+
+    const now = new Date();
+    const day = `${now.getDay()}`.padStart(2, 0);
+    const month = `${now.getMonth() + 1}`.padStart(2, 0);
+    const year = now.getFullYear();
+    const hour = `${now.getHours()}`.padStart(2, 0);
+    const minutes = `${now.getMinutes()}`.padStart(2, 0);
+    labelDate.textContent = `${day}/${month}/${year}, ${hour}:${minutes}`;
 
     // Clear input fields, and lose the focus on them
     inputLoginPin.value = inputLoginUsername.value = '';
@@ -85,6 +92,10 @@ btnTransfer.addEventListener('click', function (e) {
   ) {
     currentAccount.movements.push(-amount);
     receiverAccount.movements.push(amount);
+
+    // Add transfer date
+    currentAccount.movementsDates.push(new Date().toISOString());
+    receiverAccount.movementsDates.push(new Date());
 
     updateUI(currentAccount);
   }
@@ -126,6 +137,9 @@ btnLoan.addEventListener('click', function (e) {
     // Add the movement
     currentAccount.movements.push(amount);
 
+    // Add movement date
+    currentAccount.movementsDates.push(new Date().toISOString());
+
     // Update the UI
     updateUI(currentAccount);
   }
@@ -138,7 +152,7 @@ let sortedState = false;
 btnSort.addEventListener('click', function (e) {
   e.preventDefault();
 
-  displayMovements(currentAccount.movements, !sortedState);
+  displayMovements(currentAccount, !sortedState);
   sortedState = !sortedState;
 });
 
@@ -152,3 +166,8 @@ btnSort.addEventListener('click', function (e) {
 //     if (i % 3 === 0) row.style.backgroundColor = 'blue';
 //   });
 // })
+
+// Fake Always Logged In
+currentAccount = account1;
+updateUI(currentAccount);
+containerApp.style.opacity = 100;
