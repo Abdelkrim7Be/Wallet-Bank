@@ -28,12 +28,53 @@ import {
   inputClosePin,
 } from './elements.js';
 
+export const formatter = new Intl.DateTimeFormat('en-GB', {
+  timeZone: 'UTC',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  fractionalSecondDigits: 3,
+});
+
+export const formatToISOString = date => {
+  const parts = formatter.formatToParts(new Date(date));
+  const year = parts.find(p => p.type === 'year').value;
+  const month = parts.find(p => p.type === 'month').value;
+  const day = parts.find(p => p.type === 'day').value;
+  const hour = parts.find(p => p.type === 'hour').value;
+  const minute = parts.find(p => p.type === 'minute').value;
+  const second = parts.find(p => p.type === 'second').value;
+  const fractionalSecond = parts.find(p => p.type === 'fractionalSecond').value;
+
+  return `${year}-${month}-${day}T${hour}:${minute}:${second}.${fractionalSecond}Z`;
+};
+
+
 let initialAccount = account1;
 const movements = initialAccount.movements;
+initialAccount.movementsDates =
+  initialAccount.movementsDates.map((date) => formatToISOString(date));
 
-const formatter = new Intl.DateTimeFormat('en-GB', {
-  timeZone: 'UTC',
-});
+
+export const formatMovementsDate = date => {
+  const day = `${date.getDay()}`.padStart(2, 0);
+  const month = `${date.getMonth() + 1}`.padStart(2, 0);
+  const year = date.getFullYear();
+
+  const calcDaysPassed = (date1, date2) =>
+    Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
+
+  const daysPassed = calcDaysPassed(new Date(), date);
+
+  if (daysPassed === 0) return 'Today';
+  if (daysPassed === 1) return 'Yesterday';
+  if (daysPassed <= 7) return `${daysPassed} days ago`;
+
+  return `${day}/${month}/${year}`;
+};
 
 export const displayMovements = function (acc, sort = false) {
   // But we should empty the entire container , and only then, we should start adding new elements :
@@ -50,8 +91,7 @@ export const displayMovements = function (acc, sort = false) {
     const type = movement > 0 ? 'deposit' : 'withdrawal';
 
     const date = new Date(acc.movementsDates[index]);
-    const displayDate = formatter.format(date);
-
+    const displayDate = formatMovementsDate(date);
 
     const html = ` <div class="movements__row">
           <div class="movements__type movements__type--${type}">${

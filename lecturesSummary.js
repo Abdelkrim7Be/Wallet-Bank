@@ -28,6 +28,16 @@ import {
   inputClosePin,
 } from './elements.js';
 
+import {
+  displayMovements,
+  createUsernames,
+  calcDisplayBalance,
+  calcDisplaySummary,
+  updateUI,
+  formatter,
+  formatToISOString,
+} from './mainMethods.js';
+
 // Find Method
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
@@ -540,7 +550,7 @@ console.log(new Date(2142253380000)); //Thu Nov 19 2037 15:23:00 GMT+0100 (UTC+0
 
 // Getting the current timestamp
 
-console.log(Date.noww()); //1701846747982
+console.log(Date.noww); //1701846747982
 
 future.setFullYear(2040);
 console.log(future); //Mon Nov 19 2040 15:23:00 GMT+0100 (UTC)
@@ -556,3 +566,9 @@ console.log(future); //Sat Nov 10 2040 10:10:10 GMT+0100 (UTC)
 /////////////////////////////////////////////////////////////////////////////////:
 /////////////////////////////////////////////////////////////////////////////////:
 
+const futur = new Date(2037, 10, 19, 15, 23);
+console.log(+futur); //2142253380000
+console.log(Number(futur)); //2142253380000
+
+const calcDaysPassed = (date1, date2) => Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 *24));
+console.log(calcDaysPassed(new Date(2036, 2, 20), new Date(2036, 2, 10)));
