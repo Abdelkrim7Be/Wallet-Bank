@@ -572,3 +572,42 @@ console.log(Number(futur)); //2142253380000
 
 const calcDaysPassed = (date1, date2) => Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 *24));
 console.log(calcDaysPassed(new Date(2036, 2, 20), new Date(2036, 2, 10)));
+
+/////////////////////////////////////////////////////////////////////////////////:
+/////////////////////////////////////////////////////////////////////////////////:
+/////////////////////////////////////////////////////////////////////////////////:
+/////////////////////////////////////////////////////////////////////////////////:
+
+const nume = 3887954.28;
+
+// const options = {
+//   style: "unit",
+//   unit : "mile-per-hour",
+// }
+
+// const options = {
+//   style: "unit",
+//   unit : "celsius",
+// }
+
+// const options = {
+//   style: "percent",
+//   unit : "mile-per-hour",
+// }
+
+// The currency is not set by the locale
+const options = {
+  style: "currency",
+  currency: 'MAD',
+  //useGrouping : false, // without the separators
+}
+console.log("US : " , new Intl.NumberFormat('en-US', options).format(nume));
+console.log("Germany : " , new Intl.NumberFormat('de-DE', options).format(nume));
+console.log("Morocco : " , new Intl.NumberFormat('ar-MA', options).format(nume));
+console.log(navigator.language , new Intl.NumberFormat(navigator.language, options).format(nume));
+
+
+
+
+
+

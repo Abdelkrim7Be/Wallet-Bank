@@ -38,16 +38,11 @@ import {
   formatToISOString,
 } from './mainMethods.js';
 
-
 let currentAccount;
 let initialAccount = account1;
 const movements = initialAccount.movements;
 initialAccount.movementsDates =
   initialAccount.movementsDates.map(formatToISOString);
-
-
-
-
 
 // Event Handelers
 
@@ -63,10 +58,28 @@ btnLogin.addEventListener('click', function (e) {
     //Display UI and a welcome message
     labelWelcome.textContent = `Welcome back ${
       currentAccount.owner.split(' ')[0]
-      }!`;
+    }!`;
     containerApp.style.opacity = 100;
 
     
+    const now = new Date();
+    // To know the user language automaticly
+    //const locale = navigator.language;
+    const options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      day: 'numeric',
+      month: 'numeric', //string
+      //month: 'long', //string
+      year: 'numeric',
+      //weekday: 'long',
+    };
+    // labelDate.textContent = new Intl.DateTimeFormat(locale, options).format(now);
+    labelDate.textContent = new Intl.DateTimeFormat(
+      currentAccount.locale,
+      options
+    ).format(now);
+
 
     // Clear input fields, and lose the focus on them
     inputLoginPin.value = inputLoginUsername.value = '';
@@ -99,7 +112,7 @@ btnTransfer.addEventListener('click', function (e) {
     // Add transfer date
     currentAccount.movementsDates.push(new Date().toISOString());
     receiverAccount.movementsDates.push(new Date());
-    
+
     updateUI(currentAccount);
   }
 });
@@ -107,7 +120,7 @@ btnTransfer.addEventListener('click', function (e) {
 // Closing an account
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
-  
+
   const closingUsername = inputCloseUsername.value;
   const closingPin = +inputClosePin.value;
 
@@ -124,8 +137,8 @@ btnClose.addEventListener('click', function (e) {
 
     // Hide UI
     containerApp.style.opacity = 0;
-    }
-    
+  }
+
   inputCloseUsername.value = inputClosePin.value = '';
   inputClosePin.blur();
 });
@@ -145,8 +158,8 @@ btnLoan.addEventListener('click', function (e) {
 
     // Update the UI
     updateUI(currentAccount);
-    }
-    // Clear the input field
+  }
+  // Clear the input field
   inputLoanAmount.value = '';
 });
 
@@ -165,8 +178,8 @@ btnSort.addEventListener('click', function (e) {
 
 // labelBalance.addEventListener('click', (event) => {
 //   [...document.querySelectorAll('.movements__row')].forEach((row, i) => {
-  //     if (i % 2 === 0) row.style.backgroundColor = 'orangered';
-  //     if (i % 3 === 0) row.style.backgroundColor = 'blue';
+//     if (i % 2 === 0) row.style.backgroundColor = 'orangered';
+//     if (i % 3 === 0) row.style.backgroundColor = 'blue';
 //   });
 // })
 

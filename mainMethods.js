@@ -52,18 +52,17 @@ export const formatToISOString = date => {
   return `${year}-${month}-${day}T${hour}:${minute}:${second}.${fractionalSecond}Z`;
 };
 
+export const formatCurrency = (value, locale, currency) =>
+  new Intl.NumberFormat(locale, { style: 'currency', currency }).format(value);
 
 let initialAccount = account1;
 const movements = initialAccount.movements;
-initialAccount.movementsDates =
-  initialAccount.movementsDates.map((date) => formatToISOString(date));
 
+initialAccount.movementsDates = initialAccount.movementsDates.map(date =>
+  formatToISOString(date)
+);
 
-export const formatMovementsDate = date => {
-  const day = `${date.getDay()}`.padStart(2, 0);
-  const month = `${date.getMonth() + 1}`.padStart(2, 0);
-  const year = date.getFullYear();
-
+export const formatMovementsDate = (date, locale) => {
   const calcDaysPassed = (date1, date2) =>
     Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
 
@@ -73,7 +72,7 @@ export const formatMovementsDate = date => {
   if (daysPassed === 1) return 'Yesterday';
   if (daysPassed <= 7) return `${daysPassed} days ago`;
 
-  return `${day}/${month}/${year}`;
+  return new Intl.DateTimeFormat(locale).format(date);
 };
 
 export const displayMovements = function (acc, sort = false) {
@@ -91,14 +90,16 @@ export const displayMovements = function (acc, sort = false) {
     const type = movement > 0 ? 'deposit' : 'withdrawal';
 
     const date = new Date(acc.movementsDates[index]);
-    const displayDate = formatMovementsDate(date);
+    const displayDate = formatMovementsDate(date, acc.locale);
+
+    const formatMovement = formatCurrency(movement, acc.locale, acc.currency);
 
     const html = ` <div class="movements__row">
           <div class="movements__type movements__type--${type}">${
       index + 1
     } ${type}</div>
           <div class="movements__date">${displayDate}</div>
-          <div class="movements__value">${movement.toFixed(2)}€</div>
+          <div class="movements__value">${formatMovement}</div>
         </div>`;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
@@ -127,7 +128,8 @@ export const createUsernames = function (accs) {
 export const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
   // labelBalance.textContent = balance + "";
-  labelBalance.textContent = `${acc.balance.toFixed(2)} €`;
+  const formatBalance = formatCurrency(acc.balance, acc.locale, acc.currency);
+  labelBalance.textContent = formatBalance;
   // Label is something we wanna put a text in it
   // we use in it oftently textContent f label
 };
@@ -137,13 +139,16 @@ export const calcDisplaySummary = function (acc) {
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
 
-  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
+  const formatIncome = formatCurrency(incomes, acc.locale, acc.currency);
+  // labelSumIn.textContent = `${incomes.toFixed(2)}€`;
+  labelSumIn.textContent = formatIncome;
 
   const out = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-
-  labelSumOut.textContent = `${Math.abs(out).toFixed(2)}€`;
+  const formatOuts = formatCurrency(out, acc.locale, acc.currency);
+  // labelSumOut.textContent = `${Math.abs(out).toFixed(2)}€`;
+  labelSumOut.textContent = formatCurrency(out, acc.locale, acc.currency);
 
   const interests = acc.movements
     .filter(mov => mov > 0)
@@ -154,7 +159,11 @@ export const calcDisplaySummary = function (acc) {
     })
     .reduce((acc, int) => acc + int, 0);
 
-  labelSumInterest.textContent = `${interests.toFixed(2)}€`;
+  labelSumInterest.textContent = formatCurrency(
+    interests,
+    acc.locale,
+    acc.currency
+  );
 };
 
 export const updateUI = function (acc) {

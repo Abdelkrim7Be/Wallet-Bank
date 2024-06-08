@@ -18,7 +18,7 @@ export const account1 = {
     '2024-06-01T23:36:17.929Z',
     '2024-06-05T10:51:36.790Z',
   ],
-  currency: 'EUR',
+  currency: 'MAD',
   locale: 'pt-PT', // de-DE
 };
 
