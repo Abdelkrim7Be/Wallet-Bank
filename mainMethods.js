@@ -174,4 +174,36 @@ export const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+/** The reason why we put the function tick outside the setInterval is because we wanted to be executed immediatly
+ * we encountered a problem which is when the timer finishes and we are logged out and and we log in again , it starts in the last timer and then
+ * jumps to a new timer that's why we thought that it should be executed immediatly
+ * the function here when it was inside setIntervals() is only fiest executed after one second
+ * it wil only get called the first time after one second
+ */
+export const startLogoutTimer = function () {
+  // Set time to 5 minutes
+  let time = 600;
+
+  const tick = function () {
+    const min = `${Math.trunc(time / 60)}`.padStart(2, 0);
+    const sec = `${time % 60}`.padStart(2, 0);
+    // In each call, print the remaining time to the user interface
+    labelTimer.textContent = `${min}:${sec}`;
+
+    // When 0 seconds, stop timer and log out user
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = `Log In To Get Started!`;
+      containerApp.style.opacity = 0;
+    }
+
+    // Decrease by 1 seconds
+    --time;
+  };
+  tick();
+  // Call the timer every seconds
+  const timer = setInterval(tick, 1000);
+  return timer;
+};
+
 createUsernames(accounts);

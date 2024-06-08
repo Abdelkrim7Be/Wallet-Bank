@@ -1,7 +1,6 @@
 'use strict';
 
 // VaultWise APP
-
 import { account1, account2, accounts } from './data.js';
 
 import {
@@ -36,14 +35,17 @@ import {
   updateUI,
   formatter,
   formatToISOString,
+  startLogoutTimer,
 } from './mainMethods.js';
 
-let currentAccount;
+// Global variables
+let currentAccount, timer;
 let initialAccount = account1;
 const movements = initialAccount.movements;
 initialAccount.movementsDates =
   initialAccount.movementsDates.map(formatToISOString);
 
+  
 // Event Handelers
 
 // Login
@@ -61,7 +63,6 @@ btnLogin.addEventListener('click', function (e) {
     }!`;
     containerApp.style.opacity = 100;
 
-    
     const now = new Date();
     // To know the user language automaticly
     //const locale = navigator.language;
@@ -80,14 +81,18 @@ btnLogin.addEventListener('click', function (e) {
       options
     ).format(now);
 
-
     // Clear input fields, and lose the focus on them
     inputLoginPin.value = inputLoginUsername.value = '';
     inputLoginPin.blur();
 
+    // Timer
+    if (timer) clearInterval(timer);
+    timer = startLogoutTimer();
+
     updateUI(currentAccount);
   }
 });
+
 
 // Transfering money
 btnTransfer.addEventListener('click', function (e) {
@@ -114,6 +119,10 @@ btnTransfer.addEventListener('click', function (e) {
     receiverAccount.movementsDates.push(new Date());
 
     updateUI(currentAccount);
+
+    // Reset the Timer
+    clearInterval(timer);
+    timer = startLogoutTimer();
   }
 });
 
@@ -150,17 +159,24 @@ btnLoan.addEventListener('click', function (e) {
   // we are gonna round down the loan value cuz its weird to have it decimal
   const amount = Math.floor(inputLoanAmount.value);
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    // Add the movement
-    currentAccount.movements.push(amount);
+    // Time to approve a loan
+    setTimeout(function () {
+      // Add the movement
+      currentAccount.movements.push(amount);
 
-    // Add movement date
-    currentAccount.movementsDates.push(new Date().toISOString());
+      // Add movement date
+      currentAccount.movementsDates.push(new Date().toISOString());
 
-    // Update the UI
-    updateUI(currentAccount);
+      // Update the UI
+      updateUI(currentAccount);
+      // Reset the Timer
+      clearInterval(timer);
+      timer = startLogoutTimer();
+    }, 2500);
   }
   // Clear the input field
   inputLoanAmount.value = '';
+
 });
 
 // Sort mechanism
@@ -184,8 +200,7 @@ btnSort.addEventListener('click', function (e) {
 // })
 
 // Fake Always Logged In
-currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 100;
+// currentAccount = account1;
+// updateUI(currentAccount);
+// containerApp.style.opacity = 100;
 
-const formattedDates = currentAccount.movementsDates.map(formatToISOString);

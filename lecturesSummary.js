@@ -570,7 +570,8 @@ const futur = new Date(2037, 10, 19, 15, 23);
 console.log(+futur); //2142253380000
 console.log(Number(futur)); //2142253380000
 
-const calcDaysPassed = (date1, date2) => Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 *24));
+const calcDaysPassed = (date1, date2) =>
+  Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
 console.log(calcDaysPassed(new Date(2036, 2, 20), new Date(2036, 2, 10)));
 
 /////////////////////////////////////////////////////////////////////////////////:
@@ -597,17 +598,32 @@ const nume = 3887954.28;
 
 // The currency is not set by the locale
 const options = {
-  style: "currency",
+  style: 'currency',
   currency: 'MAD',
   //useGrouping : false, // without the separators
-}
-console.log("US : " , new Intl.NumberFormat('en-US', options).format(nume));
-console.log("Germany : " , new Intl.NumberFormat('de-DE', options).format(nume));
-console.log("Morocco : " , new Intl.NumberFormat('ar-MA', options).format(nume));
-console.log(navigator.language , new Intl.NumberFormat(navigator.language, options).format(nume));
+};
+console.log('US : ', new Intl.NumberFormat('en-US', options).format(nume));
+console.log('Germany : ', new Intl.NumberFormat('de-DE', options).format(nume));
+console.log('Morocco : ', new Intl.NumberFormat('ar-MA', options).format(nume));
+console.log(
+  navigator.language,
+  new Intl.NumberFormat(navigator.language, options).format(nume)
+);
 
+//=====> Asynchronous javascript
+const ingredients = ['olives', 'spinach'];
+// By all means, we schedule our function call to 3 seconds later
+const pizzaTimer = setTimeout(
+  (ing1, ing2) => console.log(`Here is your Pizza 🍕 with ${ing1} and ${ing2}`),
+  3000,
+  ...ingredients
+);
+console.log('waiting ...');
 
+if (ingredients.includes('spinach')) clearTimeout(pizzaTimer);
 
-
-
-
+// Clock
+setInterval(function () {
+  const now = new Date();
+  console.log(now);
+}, 1000);
