@@ -12,17 +12,17 @@ const allSections = document.querySelectorAll('.section');
 const allButtons = document.getElementsByTagName('button');
 const header = document.querySelector('.header');
 
-const message = document.createElement('div');
-message.classList.add('cookie-message');
-message.innerHTML =
-  'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie"> Got it!</button>';
-header.before(message);
+// const message = document.createElement('div');
+// message.classList.add('cookie-message');
+// message.innerHTML =
+//   'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie"> Got it!</button>';
+// header.before(message);
 
-document
-  .querySelector('.btn--close-cookie')
-  .addEventListener('click', function () {
-    message.remove();
-  });
+// document
+//   .querySelector('.btn--close-cookie')
+//   .addEventListener('click', function () {
+//     message.remove();
+//   });
 
 const openModal = function (e) {
   e.preventDefault();
@@ -44,4 +44,16 @@ document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
     closeModal();
   }
+});
+
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', function (e) {
+  const s1coords = section1.getBoundingClientRect();
+  // Scrolling 
+  // The modern way
+  section1.scrollIntoView({
+    behavior : 'smooth'
+  })
 });
