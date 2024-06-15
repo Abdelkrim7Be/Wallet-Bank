@@ -31,7 +31,7 @@ message.classList.add('cookie-message');
 //message.textContent = "We use cookies for improved functionality and analytics";
 message.innerHTML =
   'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie"> Got it!</button>';
-  header.prepend(message); //prepending adds this as the first child of the header
+header.prepend(message); //prepending adds this as the first child of the header
 header.append(message); //prepending adds this as the lasst child of the header
 //==>the reason why just one elemnt is displayed is that t is a live elemnt in the dom so , it cannot be in multiple places
 // at the same time
@@ -48,8 +48,8 @@ header.after(message);
 ////////////////////////////////////////////////////////////////////////////////////////
 // DELETING ELEMENTS
 document
-.querySelector('.btn--close-cookie')
-.addEventListener('click', function () {
+  .querySelector('.btn--close-cookie')
+  .addEventListener('click', function () {
     // message is already stored in that variable , no need to select it again
     message.remove();
     // message.parentElement.removeChild(message);
@@ -159,7 +159,7 @@ console.log(
   'height/width viewport',
   document.documentElement.clientHeight,
   document.documentElement.clientWidth
-  );
+);
 
 console.log('Current scroll (X/Y)', window.pageXOffset, window.pageYOffset); //the distance between the current
 // position (the view port ) and the top of the page
@@ -168,29 +168,26 @@ console.log('Current scroll (X/Y)', window.pageXOffset, window.pageYOffset); //t
 window.scrollTo(
   s1coords.left + window.pageXOffset,
   s1coords.top + window.pageYOffset
-  );
+);
 // The reason why when you click the second time on the button to go to the desired position it won't work
 // it is because the top and left positions are relative to the viewport , when you are already there ,there is no point
 // to go again when you are already there hhhhh
 
-
 // (Current position + current scroll)
 
-  // The old way
-  window.scrollTo({
-    left: s1coords.left + window.pageXOffset,
-    top: s1coords.top + window.pageYOffset,
-    behavior: 'smooth',
-  });
+// The old way
+window.scrollTo({
+  left: s1coords.left + window.pageXOffset,
+  top: s1coords.top + window.pageYOffset,
+  behavior: 'smooth',
+});
 
-  ////////////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////////////
-  
-  
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
-  // EVENTS
+// EVENTS
 // mouseenter
 const h1 = document.querySelector('h1');
 const alertH1 = function (e) {
@@ -207,7 +204,7 @@ h1.addEventListener('mouseenter', alertH1);
 
 // removing an eventHandler
 // look in the function
-// or after a while : 
+// or after a while :
 setTimeout(() => h1.removeEventListener('mouseenter', alertH1), 3000);
 
 //<h1 onclick="alert('HTML alert')">
@@ -241,11 +238,11 @@ document.querySelector('.nav__link').addEventListener('click', function (e) {
 document.querySelector('.nav__links').addEventListener('click', function (e) {
   this.style.backgroundColor = randomColor();
   console.log('CONTAINER', e.currentTarget);
-  });
-  document.querySelector('.nav').addEventListener('click', function (e) {
-    this.style.backgroundColor = randomColor();
-    console.log('NAV', e.currentTarget);
-    });
+});
+document.querySelector('.nav').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log('NAV', e.currentTarget);
+});
 
 /**The difference between e.target and e.currentTarget is , the first   refers to where the event happened ,
  * it's not representing the element attached to the handeler and the second refers to the element attached
@@ -263,15 +260,15 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 //   console.log(e.currentTarget === this);
 
 /** The addEventListener (in its default behavior) is only listens to events in the bubbling phase , not in he capturing phase because
- * it is irrelevant for us , and in the otherhand, the bubbling phase is beneficial in what's so called 
+ * it is irrelevant for us , and in the otherhand, the bubbling phase is beneficial in what's so called
  * EVENT DELEGATION
  */
 
-/** so if we did addEventListener('click', function(e) {...} , true) thsi true is setting useCapture to true, so 
+/** so if we did addEventListener('click', function(e) {...} , true) thsi true is setting useCapture to true, so
  * we no longer listen to events in the bubbling phase, but in the capturing phase, se, if we tested it on the first
- * handeler we got uphere , the order will reverse and we'll see : NAV , nav_links _ nav_link, because these elts 
+ * handeler we got uphere , the order will reverse and we'll see : NAV , nav_links _ nav_link, because these elts
  * captures the event when it was descending from the root in the capturing to the target
-*/
+ */
 // Like this :
 // document.querySelector('.nav__link').addEventListener('click', function (e) {
 //   this.style.backgroundColor = randomColor();
@@ -297,14 +294,87 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
  *  ancestor and using properties like event.target, you can handle events for multiple child elements in a
  * clean and efficient manner. */
 
-
-
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 
+// DOM traversing : basically walking through the DOM
 
+// Going downwards : Child
+console.log(h1.querySelectorAll('.highlight'));
+/**NodeList(2)
+ * 0: span.highlight
+ * 1: span.highlight
+  length : 2 */
+console.log(h1.childNodes); //this  lists all (dirrect children => comments , text .....)
+/**NodeList(9) : [text, comment, text, span.highlight, text, br, text, span.highlight, text][text, comment, text,
+ * span.highlight, text, br, text, span.highlight, text] */
+console.log(h1.children);
+/**HTMLCollection(3) [span.highlight, br, span.highlight] */
+
+// here , elements , not nodes
+h1.firstElementChild.style.color = 'white';
+h1.lastElementChild.style.color = 'white';
+
+// Going upwards : Parent
+console.log(h1.parentNode);
+console.log(h1.parentElement); //==> more interested in
+
+//sometimes , we want to find a parent element that is not direct , no matter how far he is
+h1.closest('.header').style.background = 'var(--gradient-secondary)'; //closest() : my closest parent element
+
+/**We could say that querySelector() and closest() are quite the opposite from each other :
+ * querySelector finds the children of a given element no matter how deep in the DOM tree
+ * closest finds the parent of a given element no matter how furthest in the DOM tree
+ */
+
+// Going sideways (somehow, JS only allows access to direct siblings (next and previous))
+
+// For Elements
+console.log(h1.previousElementSibling); //null
+console.log(h1.nextElementSibling); //h4
+
+// For Nodes
+console.log(h1.previousSibling); //text
+console.log(h1.nextSibling); //text
+
+// Access all the siblings : Trick
+console.log(h1.parentElement.children);
+/**
+h1
+1
+: 
+h4
+2
+: 
+button.btn--text.btn--scroll-to
+3
+: 
+img.header__img */ //including itself : h1
+
+/**h1.parentElement.children is an HTMLCollection, which is a live collection and does not have array methods
+ *  like forEach. so its [...h1.]*/
+[...h1.parentElement.children].forEach(function (el) {
+  if (el !== h1) el.style.transform = 'scale(0.5)';
+});
+
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+// Building a Tabbed component
+/**Tabbed component is simply a component having multiple tabs, so when we click on a different tab, it shows
+ * different content
+ */
+
+/**The mechanism is simple here : there are 3 buttons represented (having classes) as tabs and then there are 3
+ * div contents , one of them has the 'active' class which decide if it is the one whose gonna show up or not
+ */
+
+/**we could think of doing this by using forEach loop, looping over all tab , but if we had like 200 tabs , we would
+ * have a  200 copy of the same callback function , which will effect the performance
+ */
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////

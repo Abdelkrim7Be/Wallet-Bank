@@ -4,6 +4,7 @@
 // Modal window
 
 const modal = document.querySelector('.modal');
+const h1 = document.querySelector('h1');
 const overlay = document.querySelector('.overlay');
 const header = document.querySelector('.header');
 const section1 = document.querySelector('#section--1');
@@ -13,6 +14,9 @@ const allNavLinks = document.querySelectorAll('.nav__link');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
 
 // const message = document.createElement('div');
 // message.classList.add('cookie-message');
@@ -61,7 +65,6 @@ btnScrollTo.addEventListener('click', function (e) {
 
 // Page navigation
 
-
 // Event Delegation (2 steps)
 // 1.Add event listener to common parent element
 // 2. Determine what element originated the event
@@ -75,4 +78,52 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
     const id = e.target.getAttribute('href');
     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
+});
+
+// Building a Tabbed component
+// ===> Use the even Delegation
+tabsContainer.addEventListener('click', function (e) {
+  // The matching part
+  const clicked = e.target.closest('.operations__tab');
+  /**So basiclly here, the problem was when we had e.target , it returns us sometimes the span inside the button ,
+   * not the button itself , and when we did : e.target.parentElement, it returns us the parent of the button (container)
+   * when we click on the button , and since, the closest() method is benefic in event Delegation , we'll use it
+   */
+  console.log(clicked);
+
+  // A Guard Clause (more modern than if(clicked))
+  if (!clicked) return;
+
+  // Removing active classes (usual stuff)
+  tabs.forEach(t => {
+    t.classList.remove('operations__tab--active');
+  });
+  tabsContent.forEach(tc => {
+    tc.classList.remove('operations__content--active');
+  });
+
+  clicked.classList.add('operations__tab--active');
+
+  // Activate content Area
+  /**The trick here is in tabes, there is a property which is : data-tab = x, so based on that x , we will compare
+   * and choose the appropriate content to show based on the class opperations__content--x
+   */
+  // dataset.tab ==> the part after data- is tab
+
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
+  /**The trick in css is this :
+   * .operations__content {
+   *  display: none;
+   * font-size: 1.7rem;
+   * padding: 2.5rem 7rem 6.5rem 7rem;
+   * }
+   * .operations__content--active {
+   * display: grid;
+   * grid-template-columns: 7rem 1fr;
+   * column-gap: 3rem;
+   * row-gap: 0.5rem;
+   * }
+   */
 });
