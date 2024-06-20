@@ -1,18 +1,19 @@
 /* The page is NOT responsive. You can implement responsiveness yourself if you wanna have some fun 😃 */
 
 :root {
-  --color-primary: #5ec576;
-  --color-secondary: #ffcb03;
-  --color-tertiary: #ff585f;
-  --color-primary-darker: #4bbb7d;
-  --color-secondary-darker: #ffbb00;
-  --color-tertiary-darker: #fd424b;
-  --color-primary-opacity: #5ec5763a;
-  --color-secondary-opacity: #ffcd0331;
-  --color-tertiary-opacity: #ff58602d;
-  --gradient-primary: linear-gradient(to top left, #39b385, #9be15d);
-  --gradient-secondary: linear-gradient(to top left, #ffb003, #ffcb03);
+  --color-primary: #3498db; /* Light Blue */
+  --color-secondary: #e74c3c; /* Red */
+  --color-tertiary: #f1c40f; /* Yellow */
+  --color-primary-darker: #2980b9; /* Darker Blue */
+  --color-secondary-darker: #c0392b; /* Darker Red */
+  --color-tertiary-darker: #f39c12; /* Darker Yellow */
+  --color-primary-opacity: #3498db3a; /* Light Blue with Opacity */
+  --color-secondary-opacity: #e74c3c31; /* Red with Opacity */
+  --color-tertiary-opacity: #f1c40f2d; /* Yellow with Opacity */
+  --gradient-primary: linear-gradient(to top left, #3498db, #2ecc71); /* Blue to Green */
+  --gradient-secondary: linear-gradient(to top left, #e74c3c, #e67e22); /* Red to Orange */
 }
+
 
 * {
   margin: 0;

@@ -127,3 +127,51 @@ tabsContainer.addEventListener('click', function (e) {
    * }
    */
 });
+
+// Menu fade animation
+// Passing Aguments to event handelers
+// Again , using event Delegation
+
+/**there is no such difference between mouseover(opposite is : mouseout) and mouseenter(opposite is : mouseleave),
+ * the tiny difference is that mouseeneter doesn't bubble
+ */
+const nav = document.querySelector('.nav'); // we wanted to deal with the logo too that's why we went up to the nav
+
+const handleHover = function (e, opacity) {
+  // We didn't use closest() method here is simply because we don't have any child element of the link that we
+  // could accidently click on
+  console.log(e.currentTarget);
+  console.log(this); //the opacity
+  if (e.target.classList.contains('nav__link')) {
+    const link = e.target;
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    const logo = link.closest('.nav').querySelector('img');
+
+    siblings.forEach(el => {
+      if (el !== link) {
+        el.style.opacity = opacity;
+      }
+    });
+    logo.style.opacity = opacity;
+  }
+};
+
+/**The problem is that the 'addEventListener' expects a function passed in it , not a call of a function,
+ * That's why we thought of calling aour function inside a function , which will be called immediatly after the 1st one
+ */
+// nav.addEventListener('mouseover', function (e) {
+//   handleHover(e, 0.5)
+// });
+
+// to remove the fade-out effect after we remove the cursor of the navbar
+// nav.addEventListener('mouseout', function (e) {
+//   handleHover(e, 1);
+// });
+
+// other way of doing it
+//We use the bind() method to pass an argument in a handler function
+// A handler function can only have 1 argument ONLY
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+
+// to remove the fade-out effect after we remove the cursor of the navbar
+nav.addEventListener('mouseout', handleHover.bind(1));
