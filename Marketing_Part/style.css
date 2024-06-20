@@ -10,7 +10,7 @@
   --color-primary-opacity: #3498db3a; /* Light Blue with Opacity */
   --color-secondary-opacity: #e74c3c31; /* Red with Opacity */
   --color-tertiary-opacity: #f1c40f2d; /* Yellow with Opacity */
-  --gradient-primary: linear-gradient(to top left, #3498db, #2ecc71); /* Blue to Green */
+  --gradient-primary: linear-gradient(to top left, #3498db, #71006f); /* Blue to Green */
   --gradient-secondary: linear-gradient(to top left, #e74c3c, #e67e22); /* Red to Orange */
 }
 

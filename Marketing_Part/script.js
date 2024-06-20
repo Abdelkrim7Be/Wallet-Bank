@@ -175,3 +175,11 @@ nav.addEventListener('mouseover', handleHover.bind(0.5));
 
 // to remove the fade-out effect after we remove the cursor of the navbar
 nav.addEventListener('mouseout', handleHover.bind(1));
+
+// Sticky navigation
+const initialCoords = section1.getBoundingClientRect();
+// The scroll event isn't a great thing, and should be avoided
+window.addEventListener('scroll', function () {
+  if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+});
