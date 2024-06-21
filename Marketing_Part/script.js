@@ -198,13 +198,13 @@ headerObserver.observe(headerr);
 
 // Reveal sections
 // These params , u can give them any name
-const revealSection = function (entries, section) {
+const revealSection = function (entries, observer) {
   const [entry] = entries;
-  console.log(entry);
+  // console.log(entry);
   if (!entry.isIntersecting) return;
   entry.target.classList.remove('section--hidden');
   // Unobserve
-  observer.unobserve(entry.target)
+  observer.unobserve(entry.target);
 };
 
 const sectionObserver = new IntersectionObserver(revealSection, {
@@ -215,3 +215,45 @@ allSections.forEach(function (section) {
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
 });
+
+// Lazy Loading Images
+
+/**In my img folder, each picture has 2 variaties : one normal one lazy , as we scroll to
+ * the targeted section , we replace the lazy picture which is too small and ambigue to the
+ * original one by removing the class 'lazy-img" (filter of blur)
+ * : src="..../x-lazy.jpg" data-src="...../x.jpg"
+ */
+
+const imgTargets = document.querySelectorAll('img[data-src]'); //selecting imgs having
+// as a property : data-src="....."
+// console.log(imgTargets);
+
+const loadImg = function (entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
+
+  if (!entry.isIntersecting) return;
+  // replace the source attribute with the data-src attribute
+  entry.target.src = entry.target.dataset.src; //dataset is where our special dta properties are stored
+  // Remove the filter
+  // entry.target.classList.remove('lazy-img'); ====> won't work , because:
+  /**It's tricky here, thsi replacing of the source happens behind the scenes , JS finds the
+   * image that shoudl load and diplay behind the scenes , and once it finished loading
+   * it would EMIT the load event (that we can listen for it)
+   */
+  entry.target.addEventListener('load', function (e) {
+    entry.target.classList.remove('lazy-img');
+
+    observer.unobserve(entry.target);
+  });
+};
+
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+  // We need to load the imgs a little befire we reach them , so that it doesn't appear
+  // we are doing the lazy loading
+  rootMargin: '+200px',
+});
+
+imgTargets.forEach(img => imgObserver.observe(img));
