@@ -257,3 +257,107 @@ const imgObserver = new IntersectionObserver(loadImg, {
 });
 
 imgTargets.forEach(img => imgObserver.observe(img));
+
+
+
+// Slider
+// To not pollute the global namespace
+const slider = function () {
+  // Variables
+  const slides = document.querySelectorAll('.slide');
+  const btnLeft = document.querySelector('.slider__btn--left');
+  const btnRight = document.querySelector('.slider__btn--right');
+  const maxSlide = slides.length; //nodeList
+  const dotContainer = document.querySelector('.dots');
+  let currentSlide = 0;
+
+  // Functions
+  const createDots = function () {
+    slides.forEach((_, i) => {
+      dotContainer.insertAdjacentHTML(
+        'beforeend',
+        `<button class="dots__dot" data-slide="${i}"></button>`
+      );
+      // data-slide="${i}" so that we could move exactly to that slide
+    });
+  };
+
+  const activateDot = function (slide) {
+    // you should jkeep it here, otherwise it won't work due to the fact that the selection
+    // of the dots happens AFTER the creation of the dots and not before it
+    const allDots = document.querySelectorAll('.dots__dot');
+    allDots.forEach(dot => dot.classList.remove('dots__dot--active'));
+    document
+      .querySelector(`.dots__dot[data-slide="${slide}"]`)
+      .classList.add('dots__dot--active');
+  };
+
+  const goToSlide = function (slide) {
+    slides.forEach(
+      (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+    );
+  };
+  /**N.B : Its the slides that move , not the button or the viewport Lol */
+
+  // Next Slide
+  /** intial state : 0% 100% 200 % 300%
+   * after a right click : -100% 0% 100% 200%
+   * after a right click : -200% -100% 0% 100%
+   * so on....
+   */
+  const nextSlide = function () {
+    if (currentSlide === maxSlide - 1) {
+      currentSlide = 0;
+    } else {
+      ++currentSlide;
+    }
+
+    goToSlide(currentSlide);
+    activateDot(currentSlide);
+  };
+
+  // Previous Slide
+  /** intial state : 0% 100% 200 % 300%
+   * after a left click : -300% -200% -100% 0%
+   * after a left click : -200% -100% 0% 100%
+   * so on....
+   */
+  const prevSlide = function () {
+    if (currentSlide === 0) {
+      currentSlide = maxSlide - 1;
+    } else {
+      --currentSlide;
+    }
+
+    goToSlide(currentSlide);
+    activateDot(currentSlide);
+  };
+
+  const init = function () {
+    createDots();
+    activateDot(0); //when we reload the page , the dot is white on the first slide
+    goToSlide(0); //0% 100% 200% 300% : Because each of them is 100% width , so we move by 100
+  };
+
+  init();
+
+  // Event Handlers
+  btnRight.addEventListener('click', nextSlide);
+  btnLeft.addEventListener('click', prevSlide);
+  document.addEventListener('keydown', function (e) {
+    console.log(e);
+    if (e.key === 'ArrowLeft') prevSlide();
+    // Using short circuiting Lol
+    e.key === 'ArrowRight' && nextSlide();
+  });
+  dotContainer.addEventListener('click', function (e) {
+    if (e.target.classList.contains('dots__dot')) {
+      // const { slide } = e.target.dataset.slide; both 'slide' are the same => destructuring
+      const { slide } = e.target.dataset;
+      goToSlide(slide);
+      activateDot(slide);
+    }
+  });
+};
+
+slider();
