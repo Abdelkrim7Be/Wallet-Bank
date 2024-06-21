@@ -195,3 +195,23 @@ const headerObserver = new IntersectionObserver(stickyNav, {
   rootMargin: `-${navHeight}px`, //The navigation will be triggered 90px before the threshold reaches
 });
 headerObserver.observe(headerr);
+
+// Reveal sections
+// These params , u can give them any name
+const revealSection = function (entries, section) {
+  const [entry] = entries;
+  console.log(entry);
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  // Unobserve
+  observer.unobserve(entry.target)
+};
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null, ///viewport
+  threshold: 0.15,
+});
+allSections.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+});
