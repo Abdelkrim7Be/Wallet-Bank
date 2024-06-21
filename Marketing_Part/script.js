@@ -176,10 +176,22 @@ nav.addEventListener('mouseover', handleHover.bind(0.5));
 // to remove the fade-out effect after we remove the cursor of the navbar
 nav.addEventListener('mouseout', handleHover.bind(1));
 
-// Sticky navigation
-const initialCoords = section1.getBoundingClientRect();
-// The scroll event isn't a great thing, and should be avoided
-window.addEventListener('scroll', function () {
-  if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
+// The intersection Observer API
+
+const headerr = document.querySelector('.header');
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = function (entries) {
+  // like entries[0]
+  const [entry] = entries;
+  // console.log(entry);
+  if (!entry.isIntersecting) nav.classList.add('sticky');
   else nav.classList.remove('sticky');
+};
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  // A box of x pixels that will be applied outside the target
+  rootMargin: `-${navHeight}px`, //The navigation will be triggered 90px before the threshold reaches
 });
+headerObserver.observe(headerr);

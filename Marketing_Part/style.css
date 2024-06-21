@@ -10,8 +10,8 @@
   --color-primary-opacity: #3498db3a; /* Light Blue with Opacity */
   --color-secondary-opacity: #e74c3c31; /* Red with Opacity */
   --color-tertiary-opacity: #f1c40f2d; /* Yellow with Opacity */
-  --gradient-primary: linear-gradient(to top left, #3498db, #71006f); /* Blue to Green */
-  --gradient-secondary: linear-gradient(to top left, #e74c3c, #e67e22); /* Red to Orange */
+  --gradient-primary: linear-gradient(to bottom right, #3498db, #ffffff); /* Blue to Green */
+  --gradient-secondary: linear-gradient(to bottom right, #ff1900, #ffffff); /* Red to Orange */
 }
 
 
@@ -205,9 +205,10 @@ h4 {
 }
 
 .header__img {
-  width: 100%;
+  width: 80%;
+  border-radius: 2%;
   grid-column: 2 / 3;
-  grid-row: 1 / span 4;
+  grid-row: 1 / span 2;
   transform: translateY(-6rem);
 }
 

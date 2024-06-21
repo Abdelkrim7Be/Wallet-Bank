@@ -379,3 +379,74 @@ img.header__img */ //including itself : h1
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
+// Old way of Sticky navigation
+const initialCoords = section1.getBoundingClientRect();
+// The scroll event isn't a great thing, and should be avoided
+window.addEventListener('scroll', function () {
+  if (window.scrollY > initialCoords.top) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+});
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+
+// The intersection Observer API
+/**1
+The Intersection Observer API is a powerful tool in JavaScript that allows you to monitor the visibility of 
+elements in relation to their container (usually the viewport) or a designated ancestor element. In simpler 
+terms, it lets you know when an element enters, leaves, or changes its visibility within the viewable area. */
+
+/**This callback function will get called each time our target element is intersecting 
+ * the root element at the threshold that we defined
+ */
+const obsCallback = function (entries, observer) {
+  entries.forEach(entry => {
+    /**when scrolling and entering the target section 1 , by a threshold of  0.1, it gets
+     * trigered
+     * in the clg, observe two vars: intersectionRation & isIntersecting :true/false
+     */
+    console.log(entry);
+  })
+}
+const obsOptions = {
+  root: null, //Our target element to intersect //the viewport in our case
+  threshold: [0, 0.2],
+  /**The 0 value here means that our callback will trigger each time our target element moves
+   * out completely out of the view, and also as soon as it enters the view 
+   * evene tho we arn't in the target area, the callback got triggered and ration = 0 
+   * and the isIntersecting = true 
+   */
+  //threshold: 0.2 //10% : the percentage of intersection at which the observer callback 
+  // will be 
+
+}
+const observer = new IntersectionObserver(obsCallback, obsOptions);
+observer.observe(section1); //The target element
+
+
+/**
+ * root: null: This means that the root is the viewport of the browser. 
+ * The observer will track the visibility of the target element (section1 in this case) 
+ * relative to the viewport.
+ * threshold: 0.1: This means that the observer's callback function will be invoked when 
+ * 10% (0.1) of the target element is visible within the viewport.
+ */
+
+/**
+ * When using IntersectionObserver with root set to section1 and the target set to section2,
+ *  you are measuring the visibility of section2 within the context of section1. This means 
+ * that the observer tracks the intersection of section2 as it appears within the bounds of 
+ * section1, rather than within the viewport of the browser.
+ */
+
+// We looop over the entries when we have an array of thresholds, not just one value
+
+/**Setting rootMargin: -${navHeight}pxshifts the top boundary of the root's bounding box 
+ * upward bynavHeight` pixels. */
+
+/**by using IntersectionObserver, it will work no matter how small or wide the screen is */
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
