@@ -289,3 +289,306 @@ h2 {
 .timer {
   font-weight: 600;
 }
+
+:root {
+  --dashboard-bg: #0c1827;
+  --dashboard-surface: #122337;
+  --dashboard-surface-2: #172b41;
+  --dashboard-border: rgba(255, 255, 255, 0.1);
+  --dashboard-text: #f4f8fc;
+  --dashboard-muted: #9eafc1;
+  --dashboard-mint: #57c7b0;
+  --dashboard-blue: #6aa9e8;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  padding: 1.5rem 3rem 3rem;
+  color: var(--dashboard-text);
+  background: radial-gradient(circle at 85% 0%, #183d56, var(--dashboard-bg) 42%);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+nav {
+  max-width: 118rem;
+  margin: 0 auto;
+  padding: 1.5rem 0 2.5rem;
+}
+
+.account-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: var(--dashboard-text);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  text-decoration: none;
+}
+
+.account-brand .logo {
+  width: 3.6rem;
+  height: 3.6rem;
+  object-fit: contain;
+}
+
+.welcome {
+  margin: 0;
+  color: var(--dashboard-muted);
+  font-family: inherit;
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.login {
+  gap: 0.8rem;
+}
+
+.login__input {
+  width: 10rem;
+  margin: 0;
+  border: 1px solid var(--dashboard-border);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--dashboard-text);
+}
+
+.login__input:focus {
+  border-color: var(--dashboard-mint);
+}
+
+.login__input::placeholder {
+  color: var(--dashboard-muted);
+}
+
+.login__btn {
+  color: var(--dashboard-mint);
+}
+
+.app {
+  max-width: 118rem;
+  margin: 2rem auto 0;
+  gap: 1.5rem;
+  border: 1px solid var(--dashboard-border);
+  padding: 2rem;
+  border-radius: 2rem;
+  background: rgba(18, 35, 55, 0.72);
+  box-shadow: 0 2.5rem 6rem rgba(0, 0, 0, 0.24);
+}
+
+.balance {
+  margin-bottom: 1.5rem;
+}
+
+.balance__label {
+  color: var(--dashboard-text);
+  font-family: inherit;
+  font-size: 2.2rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+
+.balance__date,
+.logout-timer,
+.movements__date,
+.summary__label {
+  color: var(--dashboard-muted);
+}
+
+.balance__value {
+  color: var(--dashboard-mint);
+  font-size: clamp(3rem, 5vw, 5rem);
+  font-weight: 600;
+  letter-spacing: -0.06em;
+}
+
+.movements {
+  background: rgba(8, 18, 31, 0.52);
+  border: 1px solid var(--dashboard-border);
+}
+
+.movements__row {
+  padding: 2rem 2.5rem;
+  border-bottom-color: var(--dashboard-border);
+}
+
+.movements__type {
+  min-width: 10rem;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  color: #092131;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.movements__type--deposit {
+  background: var(--dashboard-mint);
+}
+
+.movements__type--withdrawal {
+  background: #f07b8b;
+}
+
+.movements__value {
+  color: var(--dashboard-text);
+  font-size: 1.6rem;
+}
+
+.summary {
+  padding: 0 0.3rem;
+}
+
+.summary__value {
+  color: var(--dashboard-text);
+  font-size: 1.7rem;
+}
+
+.summary__value--in,
+.summary__value--interest {
+  color: var(--dashboard-mint);
+}
+
+.summary__value--out {
+  color: #f07b8b;
+}
+
+.btn--sort {
+  color: var(--dashboard-muted);
+}
+
+.operation {
+  padding: 2.5rem;
+  border: 1px solid var(--dashboard-border);
+  color: var(--dashboard-text);
+}
+
+.operation--transfer {
+  background: linear-gradient(135deg, #174b58, #176a68);
+}
+
+.operation--loan {
+  background: linear-gradient(135deg, #194759, #24766c);
+}
+
+.operation--close {
+  background: linear-gradient(135deg, #49314b, #7d3c53);
+}
+
+h2 {
+  color: var(--dashboard-text);
+  font-size: 1.7rem;
+}
+
+.form__input {
+  color: var(--dashboard-text);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.form__input::placeholder {
+  color: var(--dashboard-muted);
+}
+
+.form__input:focus {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.form__label {
+  color: rgba(244, 248, 252, 0.75);
+}
+
+.form__btn {
+  color: #092131;
+  background: var(--dashboard-mint);
+}
+
+.form__btn:hover,
+.form__btn:focus {
+  background: var(--dashboard-blue);
+}
+
+.timer {
+  color: var(--dashboard-mint);
+}
+
+@media (max-width: 820px) {
+  body {
+    padding: 1rem;
+  }
+
+  nav {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .welcome {
+    order: 3;
+    width: 100%;
+  }
+
+  .app {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    padding: 1.2rem;
+  }
+
+  .balance,
+  .movements,
+  .summary,
+  .operation,
+  .logout-timer {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .balance {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .movements {
+    max-height: 34rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .login__input {
+    width: 7.5rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .movements__row {
+    padding: 1.5rem 1rem;
+  }
+
+  .movements__type {
+    min-width: 8rem;
+    margin-right: 0.7rem;
+    font-size: 0.9rem;
+  }
+
+  .movements__value {
+    font-size: 1.3rem;
+  }
+
+  .summary {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .summary__value {
+    margin-right: 1rem;
+  }
+
+  .summary .btn--sort {
+    width: 100%;
+    margin-top: 0.8rem;
+    text-align: left;
+  }
+}
