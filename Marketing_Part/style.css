@@ -991,6 +991,32 @@ h4 {
   line-height: 1.5;
 }
 
+.modal {
+  width: min(60rem, calc(100% - 3rem));
+  border: 1px solid var(--line);
+  border-radius: 1.5rem;
+  background: var(--navy-soft);
+  color: var(--ink);
+}
+
+.modal__header {
+  color: var(--ink);
+}
+
+.modal__form label {
+  color: var(--muted-ink);
+}
+
+.modal__form input {
+  border-color: var(--line);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--ink);
+}
+
+.btn--close-modal {
+  color: var(--muted-ink);
+}
+
 .modal__form {
   margin: 0 3rem;
   display: grid;

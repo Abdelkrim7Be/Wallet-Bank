@@ -70,14 +70,17 @@ btnScrollTo.addEventListener('click', function (e) {
 // 2. Determine what element originated the event
 
 document.querySelector('.nav__links').addEventListener('click', function (e) {
+  const link = e.target.closest('.nav__link');
+  if (!link) return;
+
+  const id = link.getAttribute('href');
+  if (!id.startsWith('#')) return;
+
   e.preventDefault();
   // console.log(e.target);
   // I need now a matching strategy : to target only the element that i'm interested in , not some kind of border hhh
   // Matching strategy (a pretty hard technic)
-  if (e.target.classList.contains('nav__link')) {
-    const id = e.target.getAttribute('href');
-    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
-  }
+  document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
 });
 
 // Building a Tabbed component
