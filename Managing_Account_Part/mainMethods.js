@@ -1,7 +1,5 @@
 'use strict';
 
-// VaultWise APP
-
 import { account1, accounts } from './data.js';
 
 import {
@@ -43,10 +41,7 @@ export const formatToISOString = date => {
 export const formatCurrency = (value, locale, currency) =>
   new Intl.NumberFormat(locale, { style: 'currency', currency }).format(value);
 
-let initialAccount = account1;
-const movements = initialAccount.movements;
-
-initialAccount.movementsDates = initialAccount.movementsDates.map(date =>
+account1.movementsDates = account1.movementsDates.map(date =>
   formatToISOString(date)
 );
 
@@ -64,10 +59,7 @@ export const formatMovementsDate = (date, locale) => {
 };
 
 export const displayMovements = function (acc, sort = false) {
-  // But we should empty the entire container , and only then, we should start adding new elements :
   containerMovements.innerHTML = '';
-  // innerHTML is like textContent, the differenece is textContent returns the text inside the wanted element
-  // and innerHTML returns you everythings including the html
 
   const movs = acc.movements.map((movement, index) => ({
     movement,
@@ -92,18 +84,10 @@ export const displayMovements = function (acc, sort = false) {
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
-  /**So with beforeend, the order of the movements would be inverted. And that's because each new element
-   * would simply be added after the previous one. So at the end of the container, right?
-   * And so that's after all the child elements that are already in there.
-   * And that's why I wanted it to be the other way around
-   * because like this (using 'afterbegin'), it will always be basically appended
-   * to all the other children. So any new child element will appear before all the other child elements
-   * that were already there. */
+  /* Rendering with afterbegin keeps the newest movement at the top. */
 };
 
 export const createUsernames = function (accs) {
-  // to mutate the original array => forEach()
-  // to return a new array without modifying the new one => map()
   accs.forEach(account => {
     account.username = account.owner
       .toLowerCase()
@@ -115,11 +99,8 @@ export const createUsernames = function (accs) {
 
 export const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  // labelBalance.textContent = balance + "";
   const formatBalance = formatCurrency(acc.balance, acc.locale, acc.currency);
   labelBalance.textContent = formatBalance;
-  // Label is something we wanna put a text in it
-  // we use in it oftently textContent f label
 };
 
 export const calcDisplaySummary = function (acc) {
@@ -128,21 +109,18 @@ export const calcDisplaySummary = function (acc) {
     .reduce((acc, mov) => acc + mov, 0);
 
   const formatIncome = formatCurrency(incomes, acc.locale, acc.currency);
-  // labelSumIn.textContent = `${incomes.toFixed(2)}€`;
   labelSumIn.textContent = formatIncome;
 
   const out = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
   const formatOuts = formatCurrency(out, acc.locale, acc.currency);
-  // labelSumOut.textContent = `${Math.abs(out).toFixed(2)}€`;
   labelSumOut.textContent = formatCurrency(out, acc.locale, acc.currency);
 
   const interests = acc.movements
     .filter(mov => mov > 0)
     .map(deposit => (deposit * acc.interestRate) / 100)
     .filter((int, i, arr) => {
-      //console.log(arr); //[2.4, 5.4, 36, 0.84, 15.6]
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
@@ -162,34 +140,23 @@ export const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
-/** The reason why we put the function tick outside the setInterval is because we wanted to be executed immediatly
- * we encountered a problem which is when the timer finishes and we are logged out and and we log in again , it starts in the last timer and then
- * jumps to a new timer that's why we thought that it should be executed immediatly
- * the function here when it was inside setIntervals() is only fiest executed after one second
- * it wil only get called the first time after one second
- */
 export const startLogoutTimer = function () {
-  // Set time to 5 minutes
   let time = 600;
 
   const tick = function () {
     const min = `${Math.trunc(time / 60)}`.padStart(2, 0);
     const sec = `${time % 60}`.padStart(2, 0);
-    // In each call, print the remaining time to the user interface
     labelTimer.textContent = `${min}:${sec}`;
 
-    // When 0 seconds, stop timer and log out user
     if (time === 0) {
       clearInterval(timer);
       labelWelcome.textContent = `Log In To Get Started!`;
       containerApp.style.opacity = 0;
     }
 
-    // Decrease by 1 seconds
     --time;
   };
   tick();
-  // Call the timer every seconds
   const timer = setInterval(tick, 1000);
   return timer;
 };
