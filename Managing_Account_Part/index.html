@@ -26,15 +26,23 @@
           type="text"
           placeholder="user"
           class="login__input login__input--user"
+          aria-label="Username"
+          autocomplete="username"
         />
         <input
           type="password"
           placeholder="PIN"
           maxlength="4"
           class="login__input login__input--pin"
+          aria-label="PIN"
+          autocomplete="current-password"
         />
-        <button class="login__btn">&rarr;</button>
+        <button class="login__btn" type="submit" aria-label="Log in">
+          &rarr;
+        </button>
       </form>
+      <p class="login__hint">Demo access: <strong>ab</strong> · <strong>1111</strong></p>
+      <p class="login__feedback" aria-live="polite"></p>
     </nav>
 
     <main class="app">
@@ -76,9 +84,22 @@
       <div class="operation operation--transfer">
         <h2>Transfer money</h2>
         <form class="form form--transfer">
-          <input type="text" class="form__input form__input--to" />
-          <input type="number" class="form__input form__input--amount" />
-          <button class="form__btn form__btn--transfer">&rarr;</button>
+          <input
+            type="text"
+            class="form__input form__input--to"
+            placeholder="Username"
+            aria-label="Transfer recipient username"
+          />
+          <input
+            type="number"
+            class="form__input form__input--amount"
+            placeholder="0.00"
+            min="1"
+            aria-label="Transfer amount"
+          />
+          <button class="form__btn form__btn--transfer" type="submit">
+            &rarr;
+          </button>
           <label class="form__label">Transfer to</label>
           <label class="form__label">Amount</label>
         </form>
@@ -87,8 +108,14 @@
       <div class="operation operation--loan">
         <h2>Request loan</h2>
         <form class="form form--loan">
-          <input type="number" class="form__input form__input--loan-amount" />
-          <button class="form__btn form__btn--loan">&rarr;</button>
+          <input
+            type="number"
+            class="form__input form__input--loan-amount"
+            placeholder="0.00"
+            min="1"
+            aria-label="Loan amount"
+          />
+          <button class="form__btn form__btn--loan" type="submit">&rarr;</button>
           <label class="form__label form__label--loan">Amount</label>
         </form>
       </div>

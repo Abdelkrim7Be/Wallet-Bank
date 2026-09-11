@@ -10,9 +10,10 @@ import {
   labelSumOut,
   labelSumInterest,
   labelTimer,
+  labelFeedback,
   containerApp,
   containerMovements,
-  btnLogin,
+  loginForm,
   btnTransfer,
   btnLoan,
   btnClose,
@@ -35,7 +36,12 @@ import {
 } from './mainMethods.js';
 
 let currentAccount, timer;
-btnLogin.addEventListener('click', function (e) {
+const setFeedback = (message, state = 'error') => {
+  labelFeedback.textContent = message;
+  labelFeedback.className = `login__feedback login__feedback--${state}`;
+};
+
+loginForm.addEventListener('submit', function (e) {
   e.preventDefault();
 
   currentAccount = accounts.find(
@@ -63,17 +69,29 @@ btnLogin.addEventListener('click', function (e) {
 
     inputLoginPin.value = inputLoginUsername.value = '';
     inputLoginPin.blur();
+    setFeedback('Account ready.', 'success');
 
     if (timer) clearInterval(timer);
     timer = startLogoutTimer();
 
     updateUI(currentAccount);
+    return;
   }
+
+  currentAccount = undefined;
+  containerApp.style.opacity = 0;
+  setFeedback('We could not match that username and PIN. Try ab / 1111.');
+  inputLoginPin.select();
 });
 
 
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
+
+  if (!currentAccount) {
+    setFeedback('Log in before making a transfer.');
+    return;
+  }
 
   const amount = +inputTransferAmount.value;
   const receiverAccount = accounts.find(
@@ -98,11 +116,20 @@ btnTransfer.addEventListener('click', function (e) {
 
     clearInterval(timer);
     timer = startLogoutTimer();
+    setFeedback('Transfer completed.', 'success');
+    return;
   }
+
+  setFeedback('Check the recipient, amount, and available balance.');
 });
 
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
+
+  if (!currentAccount) {
+    setFeedback('Log in before closing your account.');
+    return;
+  }
 
   const closingUsername = inputCloseUsername.value;
   const closingPin = +inputClosePin.value;
@@ -118,8 +145,13 @@ btnClose.addEventListener('click', function (e) {
     accounts.splice(index, 1);
 
     containerApp.style.opacity = 0;
+    setFeedback('Account closed.', 'success');
+    currentAccount = undefined;
+    clearInterval(timer);
+    return;
   }
 
+  setFeedback('The confirmation details do not match this account.');
   inputCloseUsername.value = inputClosePin.value = '';
   inputClosePin.blur();
 });
@@ -127,8 +159,14 @@ btnClose.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
+  if (!currentAccount) {
+    setFeedback('Log in before requesting a loan.');
+    return;
+  }
+
   const amount = Math.floor(inputLoanAmount.value);
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    setFeedback('Reviewing your request…', 'success');
     setTimeout(function () {
       currentAccount.movements.push(amount);
 
@@ -137,7 +175,10 @@ btnLoan.addEventListener('click', function (e) {
       updateUI(currentAccount);
       clearInterval(timer);
       timer = startLogoutTimer();
+      setFeedback('Loan approved and added to your balance.', 'success');
     }, 2500);
+  } else {
+    setFeedback('Enter an eligible loan amount.');
   }
   inputLoanAmount.value = '';
 
@@ -146,6 +187,11 @@ btnLoan.addEventListener('click', function (e) {
 let sortedState = false;
 btnSort.addEventListener('click', function (e) {
   e.preventDefault();
+
+  if (!currentAccount) {
+    setFeedback('Log in to sort your movements.');
+    return;
+  }
 
   displayMovements(currentAccount, !sortedState);
   sortedState = !sortedState;

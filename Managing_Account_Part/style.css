@@ -351,6 +351,25 @@ nav {
   gap: 0.8rem;
 }
 
+.login__hint,
+.login__feedback {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.login__hint {
+  color: var(--dashboard-muted);
+}
+
+.login__feedback {
+  min-width: 19rem;
+  color: #f07b8b;
+}
+
+.login__feedback--success {
+  color: var(--dashboard-mint);
+}
+
 .login__input {
   width: 10rem;
   margin: 0;
@@ -528,6 +547,12 @@ h2 {
 
   .welcome {
     order: 3;
+    width: 100%;
+  }
+
+  .login__hint,
+  .login__feedback {
+    order: 4;
     width: 100%;
   }
 

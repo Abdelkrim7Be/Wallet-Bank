@@ -3,59 +3,15 @@
 ////////////////////////////////////////////////////////////////////////////////////////
 // Modal window
 
-const modal = document.querySelector('.modal');
-const h1 = document.querySelector('h1');
-const overlay = document.querySelector('.overlay');
 const header = document.querySelector('.header');
 const section1 = document.querySelector('#section--1');
 const allSections = document.querySelectorAll('.section');
 const allButtons = document.getElementsByTagName('button');
 const allNavLinks = document.querySelectorAll('.nav__link');
-const btnCloseModal = document.querySelector('.btn--close-modal');
-const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
-const accountSubmit = document.querySelector('.modal__form button');
-
-// const message = document.createElement('div');
-// message.classList.add('cookie-message');
-// message.innerHTML =
-//   'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie"> Got it!</button>';
-// header.before(message);
-
-// document
-//   .querySelector('.btn--close-cookie')
-//   .addEventListener('click', function () {
-//     message.remove();
-//   });
-
-const openModal = function (e) {
-  e.preventDefault();
-  modal.classList.remove('hidden');
-  overlay.classList.remove('hidden');
-};
-
-const closeModal = function () {
-  modal.classList.add('hidden');
-  overlay.classList.add('hidden');
-};
-
-btnsOpenModal.forEach(btn => btn.addEventListener('click', openModal));
-
-accountSubmit.addEventListener('click', function () {
-  window.location.href = '../Managing_Account_Part/';
-});
-
-btnCloseModal.addEventListener('click', closeModal);
-overlay.addEventListener('click', closeModal);
-
-document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-    closeModal();
-  }
-});
 
 btnScrollTo.addEventListener('click', function (e) {
   // Element.getBoundingClientRect() retourne un objet DOMRect fournissant des informations sur la taille d'un

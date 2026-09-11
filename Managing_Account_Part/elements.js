@@ -8,11 +8,13 @@ export const labelSumInterest = document.querySelector(
   '.summary__value--interest'
 );
 export const labelTimer = document.querySelector('.timer');
+export const labelFeedback = document.querySelector('.login__feedback');
 
 export const containerApp = document.querySelector('.app');
 export const containerMovements = document.querySelector('.movements');
 
 export const btnLogin = document.querySelector('.login__btn');
+export const loginForm = document.querySelector('.login');
 export const btnTransfer = document.querySelector('.form__btn--transfer');
 export const btnLoan = document.querySelector('.form__btn--loan');
 export const btnClose = document.querySelector('.form__btn--close');
