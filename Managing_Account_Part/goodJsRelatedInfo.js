@@ -1,6 +1,6 @@
 'use strict';
 
-// VaultWise APP
+// Wallet-Bank APP
 
 import { account1, account2, accounts } from './data.js';
 
