@@ -53,6 +53,8 @@ loginForm.addEventListener('submit', function (e) {
       currentAccount.owner.split(' ')[0]
     }!`;
     containerApp.style.opacity = 100;
+    containerApp.style.display = 'grid';
+    document.body.classList.add('is-authenticated');
 
     const now = new Date();
     const options = {
@@ -80,6 +82,8 @@ loginForm.addEventListener('submit', function (e) {
 
   currentAccount = undefined;
   containerApp.style.opacity = 0;
+  containerApp.style.display = 'none';
+  document.body.classList.remove('is-authenticated');
   setFeedback('We could not match that username and PIN. Try ab / 1111.');
   inputLoginPin.select();
 });
@@ -145,6 +149,8 @@ btnClose.addEventListener('click', function (e) {
     accounts.splice(index, 1);
 
     containerApp.style.opacity = 0;
+    containerApp.style.display = 'none';
+    document.body.classList.remove('is-authenticated');
     setFeedback('Account closed.', 'success');
     currentAccount = undefined;
     clearInterval(timer);

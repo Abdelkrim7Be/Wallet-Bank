@@ -152,6 +152,8 @@ export const startLogoutTimer = function () {
       clearInterval(timer);
       labelWelcome.textContent = `Log In To Get Started!`;
       containerApp.style.opacity = 0;
+      containerApp.style.display = 'none';
+      document.body.classList.remove('is-authenticated');
     }
 
     --time;
