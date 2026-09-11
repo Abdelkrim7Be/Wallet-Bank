@@ -1,13 +1,12 @@
 'use strict';
-// VaultWise APP
-
-// Elements
 export const labelWelcome = document.querySelector('.welcome');
 export const labelDate = document.querySelector('.date');
 export const labelBalance = document.querySelector('.balance__value');
 export const labelSumIn = document.querySelector('.summary__value--in');
 export const labelSumOut = document.querySelector('.summary__value--out');
-export const labelSumInterest = document.querySelector('.summary__value--interest');
+export const labelSumInterest = document.querySelector(
+  '.summary__value--interest'
+);
 export const labelTimer = document.querySelector('.timer');
 
 export const containerApp = document.querySelector('.app');

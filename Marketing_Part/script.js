@@ -89,8 +89,6 @@ tabsContainer.addEventListener('click', function (e) {
    * not the button itself , and when we did : e.target.parentElement, it returns us the parent of the button (container)
    * when we click on the button , and since, the closest() method is benefic in event Delegation , we'll use it
    */
-  console.log(clicked);
-
   // A Guard Clause (more modern than if(clicked))
   if (!clicked) return;
 

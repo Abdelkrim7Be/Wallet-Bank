@@ -1,9 +1,3 @@
-/*
- * Use this CSS to learn some intersting techniques,
- * in case you're wondering how I built the UI.
- * Have fun! 😁
- */
-
 * {
   margin: 0;
   padding: 0;
@@ -18,13 +12,11 @@ html {
 body {
   font-family: "Rubik", sans-serif;
   color: #444;
-  /* height: 100vh; */
   padding: 2rem;
   background-image: linear-gradient(to bottom right, #FDFCFB, #E2D1C3);
 
 }
 
-/* NAV✅✅✅ */
 nav {
   display: flex;
   justify-content: space-between;
@@ -87,9 +79,6 @@ nav {
   outline: none;
   color: #555;
 }
-/* ⛔⛔⛔ */
-
-/* MAIN✅✅✅ */
 .app {
   position: relative;
   max-width: 100rem;
@@ -102,7 +91,6 @@ nav {
   padding: 0.6rem;
   border-radius: 1.5rem;
 
-  /* NOTE This creates the fade in/out animation */
   opacity: 0;
   transition: all 1s;
 }

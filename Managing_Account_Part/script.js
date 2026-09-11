@@ -40,10 +40,7 @@ import {
 
 // Global variables
 let currentAccount, timer;
-let initialAccount = account1;
-const movements = initialAccount.movements;
-initialAccount.movementsDates =
-  initialAccount.movementsDates.map(formatToISOString);
+account1.movementsDates = account1.movementsDates.map(formatToISOString);
 
   
 // Event Handelers
@@ -203,4 +200,3 @@ btnSort.addEventListener('click', function (e) {
 // currentAccount = account1;
 // updateUI(currentAccount);
 // containerApp.style.opacity = 100;
-

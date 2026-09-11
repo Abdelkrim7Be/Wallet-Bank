@@ -1,11 +1,10 @@
 'use strict';
 
-// Data
 
 export const account1 = {
   owner: 'Abdelkrim Bellagnech',
   movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
-  interestRate: 1.2, // %
+  interestRate: 1.2,
   pin: 1111,
 
   movementsDates: [
@@ -19,7 +18,7 @@ export const account1 = {
     '2024-06-05T10:51:36.790Z',
   ],
   currency: 'MAD',
-  locale: 'pt-PT', // de-DE
+  locale: 'en-GB',
 };
 
 export const account2 = {

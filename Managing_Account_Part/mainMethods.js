@@ -2,7 +2,7 @@
 
 // VaultWise APP
 
-import { account1, account2, accounts } from './data.js';
+import { account1, accounts } from './data.js';
 
 import {
   labelWelcome,
@@ -14,18 +14,6 @@ import {
   labelTimer,
   containerApp,
   containerMovements,
-  btnLogin,
-  btnTransfer,
-  btnLoan,
-  btnClose,
-  btnSort,
-  inputLoginUsername,
-  inputLoginPin,
-  inputTransferTo,
-  inputTransferAmount,
-  inputLoanAmount,
-  inputCloseUsername,
-  inputClosePin,
 } from './elements.js';
 
 export const formatter = new Intl.DateTimeFormat('en-GB', {
@@ -81,16 +69,16 @@ export const displayMovements = function (acc, sort = false) {
   // innerHTML is like textContent, the differenece is textContent returns the text inside the wanted element
   // and innerHTML returns you everythings including the html
 
-  // sorting the array of movements
-  const movs = sort
-    ? acc.movements.slice().sort((a, b) => a - b)
-    : acc.movements;
+  const movs = acc.movements.map((movement, index) => ({
+    movement,
+    date: acc.movementsDates[index],
+  }));
+  if (sort) movs.sort((a, b) => a.movement - b.movement);
 
-  movs.forEach(function (movement, index) {
+  movs.forEach(function ({ movement, date }, index) {
     const type = movement > 0 ? 'deposit' : 'withdrawal';
 
-    const date = new Date(acc.movementsDates[index]);
-    const displayDate = formatMovementsDate(date, acc.locale);
+    const displayDate = formatMovementsDate(new Date(date), acc.locale);
 
     const formatMovement = formatCurrency(movement, acc.locale, acc.currency);
 
