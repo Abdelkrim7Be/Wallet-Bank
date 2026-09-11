@@ -20,29 +20,33 @@
         <img src="logo.png" alt="" class="logo" />
         <span>VaultWise</span>
       </a>
-      <p class="welcome">Log in to get started</p>
-      <form class="login">
-        <input
-          type="text"
-          placeholder="user"
-          class="login__input login__input--user"
-          aria-label="Username"
-          autocomplete="username"
-        />
-        <input
-          type="password"
-          placeholder="PIN"
-          maxlength="4"
-          class="login__input login__input--pin"
-          aria-label="PIN"
-          autocomplete="current-password"
-        />
-        <button class="login__btn" type="submit" aria-label="Log in">
-          &rarr;
-        </button>
-      </form>
-      <p class="login__hint">Demo access: <strong>ab</strong> · <strong>1111</strong></p>
-      <p class="login__feedback" aria-live="polite"></p>
+      <div class="account-nav__center">
+        <p class="welcome">Log in to get started</p>
+        <form class="login">
+          <input
+            type="text"
+            placeholder="user"
+            class="login__input login__input--user"
+            aria-label="Username"
+            autocomplete="username"
+          />
+          <input
+            type="password"
+            placeholder="PIN"
+            maxlength="4"
+            class="login__input login__input--pin"
+            aria-label="PIN"
+            autocomplete="current-password"
+          />
+          <button class="login__btn" type="submit" aria-label="Log in">
+            &rarr;
+          </button>
+        </form>
+      </div>
+      <div class="account-nav__meta">
+        <p class="login__hint">Demo access: <strong>ab</strong> · <strong>1111</strong></p>
+        <p class="login__feedback" aria-live="polite"></p>
+      </div>
     </nav>
 
     <main class="app">

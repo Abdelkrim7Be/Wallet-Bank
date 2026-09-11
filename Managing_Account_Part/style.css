@@ -318,6 +318,10 @@ nav {
   max-width: 118rem;
   margin: 0 auto;
   padding: 1.5rem 0 2.5rem;
+  display: grid;
+  grid-template-columns: minmax(18rem, 1fr) auto minmax(18rem, 1fr);
+  align-items: center;
+  gap: 2rem;
 }
 
 .account-brand {
@@ -345,6 +349,19 @@ nav {
   font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  text-align: center;
+}
+
+.account-nav__center {
+  display: grid;
+  justify-items: center;
+  gap: 0.8rem;
+}
+
+.account-nav__meta {
+  justify-self: end;
+  min-width: 18rem;
+  text-align: right;
 }
 
 .login {
@@ -362,7 +379,7 @@ nav {
 }
 
 .login__feedback {
-  min-width: 19rem;
+  min-height: 1.8rem;
   color: #f07b8b;
 }
 
@@ -541,19 +558,25 @@ h2 {
   }
 
   nav {
-    flex-wrap: wrap;
+    grid-template-columns: 1fr auto;
     gap: 1.5rem;
   }
 
   .welcome {
-    order: 3;
+    font-size: 1.2rem;
+  }
+
+  .account-nav__center {
+    grid-column: 1 / -1;
+    grid-row: 2;
     width: 100%;
   }
 
-  .login__hint,
-  .login__feedback {
-    order: 4;
+  .account-nav__meta {
+    grid-column: 1 / -1;
+    grid-row: 3;
     width: 100%;
+    text-align: center;
   }
 
   .app {
