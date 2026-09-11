@@ -17,6 +17,7 @@ const btnScrollTo = document.querySelector('.btn--scroll-to');
 const tabs = document.querySelectorAll('.operations__tab');
 const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
+const accountSubmit = document.querySelector('.modal__form button');
 
 // const message = document.createElement('div');
 // message.classList.add('cookie-message');
@@ -42,6 +43,10 @@ const closeModal = function () {
 };
 
 btnsOpenModal.forEach(btn => btn.addEventListener('click', openModal));
+
+accountSubmit.addEventListener('click', function () {
+  window.location.href = '../Managing_Account_Part/';
+});
 
 btnCloseModal.addEventListener('click', closeModal);
 overlay.addEventListener('click', closeModal);
